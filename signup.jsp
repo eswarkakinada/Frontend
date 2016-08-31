@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>signup page</title>
+<style>
+body
+{
+background-image:url("b2.jpg");
+
+background-repeat: no-repeat;
+
+}</style>
+</head>
+<body background="b2.jpg">
+<!-- <font color="white"> -->
+
+ <form method="post" action="Signup">
+   <center><table>
+     <h2>Signup</h2>
+     
+     <tr>
+     <td>Enter Name</td><td><input type="text" name="txtname" placeholder="Enter name in Caps"required></td>
+     </tr> 
+     <tr>  
+     <td> Enter password</td><td><input type="password" name="txtpass" placeholder="Password must have min 6 char"></td> <br>
+     </tr>
+ <tr>  
+     <td> Re Enter password</td><td><input type="password" name="txtcpass" placeholder="Password must have min 6 char"></td> <br>
+     </tr>
+
+     <tr>
+     <td>Enter DOB</td><td><input type="date" name="dob"></td>
+     </tr><br>
+     <tr>
+     <td>Enter phone number</td><td><input type="number" name="ph"></td>
+     </tr><br>
+     <tr>
+     <td>Enter city</td><td><input type="text" name="txt">
+     </textarea></td></tr><br>
+ 
+
+<tr>
+<td>Gender</td>
+<td>
+<input type="radio" name="r1">Male<br>
+<input type="radio" name="r1"checked>FeMale</td><br>
+</tr>
+
+
+          
+
+<tr>
+  <td>Enter Email Id</td><td><input type ="email" name="email"></td></tr>
+  <tr>
+  <td><input type="submit" value="submit"></td>
+  <td><input type="reset" value="reset"></td></table></center>
+    </form>
+    </font>
+</body>
+</html>
