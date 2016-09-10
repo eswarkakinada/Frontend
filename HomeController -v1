@@ -1,0 +1,176 @@
+package com.niit.frontend.controller;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.niit.shoppingcart.dao.CategoryDAO;
+import com.niit.shoppingcart.dao.ProductDAO;
+import com.niit.shoppingcart.dao.SupplierDAO;
+import com.niit.shoppingcart.dao.UserDetailsDAO;
+import com.niit.shoppingcart.model.Category;
+import com.niit.shoppingcart.model.Product;
+import com.niit.shoppingcart.model.Supplier;
+import com.niit.shoppingcart.model.UserDetails;
+
+@Controller
+public class HomeController {
+
+	@Autowired
+	UserDetailsDAO userdetailsDAO;
+	@Autowired
+	UserDetails userDetails;
+	@Autowired
+	CategoryDAO categoryDAO;
+	@Autowired
+	Category category;
+	@Autowired
+	SupplierDAO supplierDAO;
+	@Autowired
+	Product product;
+	@Autowired
+	ProductDAO productDAO;
+	@Autowired
+	Supplier supplier;
+
+	@ModelAttribute
+	public UserDetails returnObject() {
+
+		return new UserDetails();
+	}
+
+	@RequestMapping("/")
+	public ModelAndView showIndex() {
+		ModelAndView mv = new ModelAndView("adminhome");
+		mv.addObject("message", "thank for visit");
+		return mv;
+		// return new ModelAndView("bootstrap");
+	}
+
+	@RequestMapping("/signin")
+	public ModelAndView Signin() {
+		ModelAndView mv = new ModelAndView("signin");
+		System.out.println("in sign in page");
+		return mv;
+	}
+
+	@RequestMapping("/category")
+	public ModelAndView category() {
+		ModelAndView mv = new ModelAndView("category");
+		System.out.println("in category page");
+		return mv;
+	}
+
+	@RequestMapping(value = "/acat", method = RequestMethod.POST)
+	public ModelAndView category(@ModelAttribute("category") Category category, BindingResult result,
+			HttpServletRequest request) throws IOException {
+
+		System.out.println("processing to add category");
+		System.out.println(category.getId());
+		System.out.println(category.getName());
+		System.out.println(category.getDescription());
+		ModelAndView mv = new ModelAndView("category");
+		categoryDAO.save(category);
+		return mv;
+	}
+
+	@RequestMapping("/supplier")
+	public ModelAndView supplier() {
+		ModelAndView mv = new ModelAndView("supplier");
+		System.out.println("in supplier page");
+		return mv;
+	}
+
+	@RequestMapping(value = "/asup", method = RequestMethod.POST)
+	public ModelAndView category(@ModelAttribute("supplier") Supplier supplier, BindingResult result,
+			HttpServletRequest request) throws IOException {
+
+		System.out.println("processing to add supplier");
+		System.out.println(supplier.getId());
+		System.out.println(supplier.getName());
+		System.out.println(supplier.getAddress());
+		ModelAndView mv = new ModelAndView("supplier");
+		supplierDAO.save(supplier);
+		return mv;
+	}
+
+	@RequestMapping("/product")
+	public ModelAndView product(@ModelAttribute("product") Product product, BindingResult result,
+			HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("product");
+		System.out.println("in product page");
+		return mv;
+	}
+
+	/*@RequestMapping(value = "/aprod", method = RequestMethod.POST)
+	public ModelAndView category(@ModelAttribute("product") Product product, BindingResult result,
+			HttpServletRequest request) throws IOException {
+
+		System.out.println("processing to add supplier");
+		System.out.println(product.getId());
+		System.out.println(product.getName());
+		System.out.println(product.getPrice());
+		System.out.println(product.getDescription());
+		ModelAndView mv = new ModelAndView("supplier");
+		productDAO.save(product);
+		return mv;
+	}*/
+
+	@RequestMapping("/signup")
+	public ModelAndView Signup() {
+
+		ModelAndView mv = new ModelAndView("signup");
+		return mv;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ModelAndView signup(@ModelAttribute("userdDetails") UserDetails user, BindingResult result,
+			HttpServletRequest request) throws IOException {
+
+		System.out.println(user.getPassword());
+
+		ModelAndView mv = new ModelAndView("signin");
+		userdetailsDAO.save(user);
+		return mv;
+	}
+
+	@RequestMapping("/check")
+	public ModelAndView AfterSignin(@RequestParam("txtName") String name, @RequestParam("txtpass") String password) {
+		System.out.println(name);
+		boolean b;
+		System.out.println("In Checking Sigin Page");
+		ModelAndView mv = new ModelAndView("home");
+		// user= userservice.isValidUser(eswar,error);
+		if ((name.equals("eswar")) && (password.equals("error"))) {
+			b = true;
+
+		} else {
+			System.out.println("invalid user plese enter  valid credentials ");
+			b = false;
+		}
+
+		if (b == true) {
+			mv = new ModelAndView("home");
+		} else {
+			return new ModelAndView("signin");
+		}
+		return mv;
+	}
+
+	@RequestMapping("/home")
+	public ModelAndView home() {
+		ModelAndView mv = new ModelAndView("home");
+
+		return mv;
+	}
+
+}
